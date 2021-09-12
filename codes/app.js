@@ -1,41 +1,79 @@
-const samplesData = "samples.json";
 
-d3.json(samplesData).then(function(data){
+function charts (subjectId){
+    d3.json("samples.json").then(function(data){
 
-    let first_id = data.samples.filter(data => data.id == "940").sort((a,b) => (a-b))[0];
-    console.log("First id:", first_id)
+        let testId = data.samples.filter(sample => sample.id == subjectId)[0];
+        console.log("Test Id:", testId);
 
-    let top_otu_ids = first_id.otu_ids.slice(0,10).reverse();
-    console.log("Otu_ids:", top_otu_ids);
+        let allOtuIds = testId.otu_ids;
+        let topOtuIds = allOtuIds.slice(0,10);
+        console.log("All Otu Ids:", allOtuIds);
+        console.log("Top Otu Ids:", topOtuIds);
 
-    let top_otu_labels = first_id.otu_labels.slice(0,10).reverse();
-    console.log("Otu_labels:", top_otu_labels);
+        let allSampleValues = testId.sample_values;
+        let topSampleValues = allSampleValues.slice(0,10);
+        console.log("All Sample Values:", allSampleValues);
+        console.log("Top Sample Values:", topSampleValues);
 
-    let top_sample_values = first_id.sample_values.slice(0,10).reverse();
-    console.log("Sample_data:", top_sample_values);
+        let allOtuLabels = testId.otu_labels;
+        let topOtuLabels = allOtuLabels.slice(0,10);
+        console.log("All Otu Labels:", allOtuLabels);
+        console.log("Top Otu Labels:", topOtuLabels);
 
-    let trace1 = {
-        x: top_sample_values,
-        y: top_otu_ids,
-        // text: reversedData.map(object => object.greekName),
-        // name: "Greek",
-        type: "bar",
-        orientation: "h"
-      };
+        let traceBar = {
+            x: topSampleValues.reverse(),
+            y: topOtuIds.reverse().map(otu =>`OTU ${otu}`),
+            text: topOtuLabels.reverse(),
+            type: "bar",
+            orientation: "h"
+        };
+        console.log(traceBar)
+        let traceData = [traceBar];
+
+        let layout = {
+            font:{
+                family: 'Gravitas One',
+                size: 14
+            },
+            margin: {
+              l: 100,
+              r: 150,
+              t: 30,
+              b: 30
+            }
+        };
     
-    let traceData = [trace1];
+        Plotly.newPlot("bar", traceData, layout);
 
-    let layout = {
-        // title: "Greek gods search results",
-        // margin: {
-        //   l: 100,
-        //   r: 100,
-        //   t: 100,
-        //   b: 100
-        // }
-      };
-    
-    Plotly.newPlot("bar", traceData, layout);
+        var traceBubble = {
+            x: allOtuIds,
+            y: allSampleValues,
+            mode: 'markers',
+            marker: {
+              color: allOtuIds,
+              colorscale: 'Electric',
+              size: allSampleValues
+            }
+          };
+          
+        var data = [traceBubble];
+          
+        var layout1 = {
+            xaxis: {
+                title: {
+                    text: 'OTU ID',    
+                }
+            },
+            font: {
+                family: 'Gravitas One',
+                size: 14
+            },
+            height: 480,
+            width: 1300
+        };
+          
+        Plotly.newPlot("bubble", data, layout1);
+    });
+}
 
-});
-
+charts("940");
