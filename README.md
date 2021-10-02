@@ -27,3 +27,5 @@ The dataset reveals that a small handful of microbial species (also called opera
 6. Updated all of the plots any time that a new sample is selected.
 
 Here's the screenshot of my interactive dashboard - 
+
+![dashbaord](https://github.com/jaybdhruv/interactive-web-visualizations/blob/main/screenshots/dashboardscreenshot.jpg)
