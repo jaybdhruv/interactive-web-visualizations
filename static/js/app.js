@@ -99,44 +99,6 @@ function charts(subjectId) {
         Object.entries(metadata).forEach(([a, b]) => {
             demo.append("h5").text(`${a}:${b}`);
         });
-
-        var datagauge = [
-            {
-                type: "indicator",
-                mode: "gauge",
-                value: metadata.wfreq,
-                title: { text: "Belly Button Washing Frequency", font: { size: 24 }},
-                delta: { reference: metadata.wfreq, increasing: { color: "yellow" } },
-                gauge: {
-                    axis: { range: [null, 500], tickwidth: 1, tickcolor: "darkblue" },
-                    bar: { color: "darkblue" },
-                    bgcolor: "white",
-                    borderwidth: 2,
-                    bordercolor: "gray",
-                    steps: [
-                        { range: [0, 250], color: "cyan" },
-                        { range: [250, 400], color: "royalblue" }
-                    ],
-                    threshold: {
-                        line: { color: "red", width: 4 },
-                        thickness: 0.75,
-                        value: 490
-                    }
-                }
-            }
-        ];
-
-        var layoutgauge = {
-            width: 500,
-            height: 400,
-            margin: { t: 25, r: 25, l: 25, b: 25 },
-            paper_bgcolor: "lavender",
-            font: { color: "darkblue", family: "Arial" }
-        };
-
-        Plotly.newPlot('gauge', datagauge, layoutgauge);
-
-
     });
 }
 
